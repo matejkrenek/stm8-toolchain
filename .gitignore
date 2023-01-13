@@ -1,0 +1,28 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.lo
+*.o
+*.obj
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.elf
+*.bin
+
+# Small Device C Compiler - SDCC
+*.adb
+*.asm
+*.lst
+*.rel
+*.rst
+*.sym
+
+# Build dir
+build/
