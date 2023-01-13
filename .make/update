@@ -1,0 +1,114 @@
+var fs = require('fs');
+
+const args = {
+    library: 'SPL',
+    device: 'STM8S103'
+}
+
+process.argv.slice(2)
+.filter(arg => {
+    if(arg.split('=').length == 2 && arg.split("=")[0].startsWith("--")) return true
+})
+.map(arg => {
+    return [arg.split("=")[0].slice(2), arg.split("=")[1]]
+}).forEach(arg => {
+    args[arg[0]] = arg[1]
+});
+
+fs.readdir(`lib/${args.library}/src`, function(err, filenames) {
+    if (err) {
+        console.error(err)
+        return;
+    }
+    
+    filenames.forEach(filename => {
+        if(!fileIsCompatible(filename)) {
+            fs.unlink(`lib/${args.library}/src/${filename}`, (err) => {
+                if (err) {
+                  console.error(err)
+                  return
+                }
+            })
+        }
+    })
+});
+
+
+fs.readdir(`lib/${args.library}/inc`, function(err, filenames) {
+    if (err) {
+        console.error(err)
+        return;
+    }
+    
+    filenames.forEach(filename => {
+        if(!fileIsCompatible(filename)) {
+            fs.unlink(`lib/${args.library}/inc/${filename}`, (err) => {
+                if (err) {
+                  console.error(err)
+                  return
+                }
+            })
+        }
+    })
+});
+
+function fileIsCompatible(filename) {
+    if(args.device === 'STM8S103') {
+        if(
+            filename !== 'stm8s_adc2.h' &&
+            filename !== 'stm8s_adc2.c' &&
+            filename !== 'stm8s_can.h' &&
+            filename !== 'stm8s_can.c' &&
+            filename !== 'stm8s_tim3.h' &&
+            filename !== 'stm8s_tim3.c' &&
+            filename !== 'stm8s_tim5.h' &&
+            filename !== 'stm8s_tim5.c' &&
+            filename !== 'stm8s_tim6.h' &&
+            filename !== 'stm8s_tim6.c' &&
+            filename !== 'stm8s_uart2.h' &&
+            filename !== 'stm8s_uart2.c' &&
+            filename !== 'stm8s_uart3.h' &&
+            filename !== 'stm8s_uart3.c' &&
+            filename !== 'stm8s_uart4.h' &&
+            filename !== 'stm8s_uart4.c'
+        ) {
+            return true
+        }
+    } else if(args.device === 'STM8S105') {
+        if(
+            filename !== 'stm8s_adc2.h' &&
+            filename !== 'stm8s_adc2.c' &&
+            filename !== 'stm8s_can.h' &&
+            filename !== 'stm8s_can.c' &&
+            filename !== 'stm8s_tim5.h' &&
+            filename !== 'stm8s_tim5.c' &&
+            filename !== 'stm8s_tim6.h' &&
+            filename !== 'stm8s_tim6.c' &&
+            filename !== 'stm8s_uart1.h' &&
+            filename !== 'stm8s_uart1.c' &&
+            filename !== 'stm8s_uart3.h' &&
+            filename !== 'stm8s_uart3.c' &&
+            filename !== 'stm8s_uart4.h' &&
+            filename !== 'stm8s_uart4.c'
+        ) {
+            return true
+        }
+    } else if(args.device === 'STM8S208') {
+        if(
+            filename !== 'stm8s_adc1.h' &&
+            filename !== 'stm8s_adc1.c' &&
+            filename !== 'stm8s_tim5.h' &&
+            filename !== 'stm8s_tim5.c' &&
+            filename !== 'stm8s_tim6.h' &&
+            filename !== 'stm8s_tim6.c' &&
+            filename !== 'stm8s_uart2.h' &&
+            filename !== 'stm8s_uart2.c' &&
+            filename !== 'stm8s_uart4.h' &&
+            filename !== 'stm8s_uart4.c'
+        ) {
+            return true
+        }
+    } else {
+        return false;
+    }
+}

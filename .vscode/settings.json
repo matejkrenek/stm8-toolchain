@@ -1,5 +1,6 @@
 {
-    "files.associations": {
-        "stm8s_it.h": "c"
-    }
+  "files.associations": {
+    "stm8s_it.h": "c",
+    "stm8s.h": "c"
+  }
 }

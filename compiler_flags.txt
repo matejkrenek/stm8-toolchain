@@ -1,0 +1,17 @@
+-xc
+-std=c99
+-Wall
+-pedantic
+-I.
+-I./inc/
+-I./src
+-I../inc
+-I../SPL/inc
+-I../SPL/src
+-I/usr/local/stow/sdcc-gas/share/sdcc/include
+-D_SDCC
+-D_SDCC_
+-D__SDCC
+-D__SDCC__
+-DSDCC_VERSION=40000 
+-Wno-gnu-binary-literal
