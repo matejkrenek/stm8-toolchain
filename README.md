@@ -52,14 +52,24 @@ In addition to this, unused functions are removed during compilation with the us
 
 Follow all the steps below for desired functionality of the toolchain.
 
+Disclaimer: the steps are described for windows because i suppose linux users are much smarter than windows users so they don't need to be guided XD
+
 ### Prerequisites
 
 Before running the toolchain on your machine, some necessary tools need to be downloaded
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
+#### Nodejs
+- Toolchain use nodejs to handle more complex tasks (parsing json config, calculating the size of files, adjusting SPL library)
+- Download (download the LTS version): [nodejs.org](https://nodejs.org/en/)
+#### STVP
+- Programmer to flash the program to stm
+- STVP comes with STVD that is distributed by STM. There some license stuffs so to be sure everythings is working properly follow these guides: [www.elektromys.eu](http://www.elektromys.eu/clanky/stm8_2_stvd/clanek.html)
+#### SDCC
+- Compiler to compile the program
+- Download: [sdcc.sourceforge.net](https://sdcc.sourceforge.net/)
+#### Others
+   ```sh
+   choco install git make vscode mingw
+   ```
 ### Installation
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
