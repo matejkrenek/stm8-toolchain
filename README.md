@@ -77,18 +77,24 @@ You may have some of these tools already downloaded.
 
 Now when all necessary tools are downloaded you can run the toolchain on your machine. 
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/matejkrenek/stm8-toolchain.git {project_name}
    ```
-3. Install NPM packages
+2. Edit config.json according to you needs
+   ```json
+   {
+      "device": "STM8S103",
+      "flash": {
+          "stvp_path": "C:/Program Files (x86)/STMicroelectronics/st_toolset/stvp/",
+          "stlink": "ST-LINK",
+          "device": "STM8S103F3"
+      }
+  }
+   ```
+3. After editing config.json 
    ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+   make update
    ```
 
 <!-- USAGE EXAMPLES -->
