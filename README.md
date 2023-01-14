@@ -90,7 +90,7 @@ Now when all necessary tools are downloaded you can run the toolchain on your ma
           "stlink": "ST-LINK",
           "device": "STM8S103F3"
       }
-  }
+   }
    ```
 3. After editing config.json 
    ```sh
