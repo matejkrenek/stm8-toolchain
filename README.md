@@ -100,9 +100,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Matěj Křenek - [mailto:mate23.krenek@gmail.com]mate23.krenek@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/matejkrenek/stm8-toolchain](https://github.com/matejkrenek/stm8-toolchain)
 
 
 <!-- ACKNOWLEDGMENTS -->
