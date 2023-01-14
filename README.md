@@ -9,9 +9,7 @@
 -->
 
 <div align="center">
-  <a href="https://github.com/matejkrenek/stm8-toolchain">
-    <img src="https://www.mouser.ca/images/marketingid/2011/img/121374776.png?v=031122.0245" alt="Logo" width="80" height="80">
-  </a>
+  [![Toolchain][toolchain-logo]][toolchain-url]
 
   <h3 align="center">STM8 Toolchain</h3>
 
@@ -241,5 +239,6 @@ Use this space to list resources you find helpful and would like to give credit 
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[logo]: https://www.mouser.ca/images/marketingid/2011/img/121374776.png?v=031122.0245
+[toolchain-logo]: https://www.mouser.ca/images/marketingid/2011/img/121374776.png?v=031122.0245
+[toolchain-url]: https://github.com/matejkrenek/stm8-toolchain
 [JQuery-url]: https://jquery.com 
