@@ -78,10 +78,12 @@ You may have some of these tools already downloaded.
 Now when all necessary tools are downloaded you can run the toolchain on your machine. 
 
 1. Clone the repo
+
    ```sh
    git clone https://github.com/matejkrenek/stm8-toolchain.git {project_name}
    ```
 2. Edit config.json according to you needs
+
    ```json
    {
       "device": "STM8S103",
@@ -92,7 +94,13 @@ Now when all necessary tools are downloaded you can run the toolchain on your ma
       }
    }
    ```
+   #### Supported devices
+    | First Header  | Second Header |
+    | ------------- | ------------- |
+    | Content Cell  | Content Cell  |
+    | Content Cell  | Content Cell  |
 3. After editing config.json 
+
    ```sh
    make update
    ```
