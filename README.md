@@ -94,11 +94,13 @@ Now when all necessary tools are downloaded you can run the toolchain on your ma
       }
    }
    ```
-   #### Supported devices
-    | First Header  | Second Header |
-    | ------------- | ------------- |
-    | Content Cell  | Content Cell  |
-    | Content Cell  | Content Cell  |
+   #### Supported parameters
+    | Property        | Values                            |
+    | --------------- | --------------------------------- |
+    | "device"        | STM8S103, STM8S105, STM8S208      |
+    | "flash.stlink"  | Any programmer supported by STVP  |
+    | "flash.device"  | Any device supported by STVP      |
+    
 3. After editing config.json 
 
    ```sh
