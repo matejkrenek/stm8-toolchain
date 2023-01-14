@@ -100,7 +100,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- CONTACT -->
 ## Contact
 
-Matěj Křenek - [mailto:mate23.krenek@gmail.com]mate23.krenek@gmail.com
+Matěj Křenek - [mate23.krenek@gmail.com](mailto:mate23.krenek@gmail.com)
 
 Project Link: [https://github.com/matejkrenek/stm8-toolchain](https://github.com/matejkrenek/stm8-toolchain)
 
