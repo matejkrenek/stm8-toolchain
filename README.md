@@ -120,7 +120,7 @@ Now when all necessary tools are downloaded you can run the toolchain on your ma
    make install
    ```
 - For libraries there is associated folder lib:
--
+
    ```sh
    |--app
       |--inc
@@ -135,6 +135,7 @@ Now when all necessary tools are downloaded you can run the toolchain on your ma
    ```
 ### Commands
 - make commands that you can use to trigger functions
+
    ```sh
    make {command}
    ```
