@@ -35,6 +35,7 @@
     </ul>
   </li>
   <li><a href="#usage">Usage</a></li>
+  <li><a href="#limitations">Limitations</a></li>
   <li><a href="#contact">Contact</a></li>
   <li><a href="#acknowledgments">Acknowledgments</a></li>
 
@@ -155,6 +156,10 @@ Matěj Křenek - [mate23.krenek@gmail.com](mailto:mate23.krenek@gmail.com)
 
 Project Link: [https://github.com/matejkrenek/stm8-toolchain](https://github.com/matejkrenek/stm8-toolchain)
 
+<!-- LIMITATIONS -->
+## Limitations
+
+- You have to run make file commands in git bash 😥
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
