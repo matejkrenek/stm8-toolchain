@@ -108,8 +108,7 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Apart from this toolchain I recommend any of these!
-
+Apart from this toolchain I recommend any of these:
 * [Wykys stm8 tools](https://gitlab.com/wykys/stm8-tools)
 * [Marrek Nozka](https://github.com/spseol/STM8-deroboard-start)
 
