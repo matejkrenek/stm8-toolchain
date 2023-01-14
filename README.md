@@ -56,13 +56,16 @@ Disclaimer: the steps are described for windows because i suppose linux users ar
 
 ### Prerequisites
 
-Before running the toolchain on your machine, some necessary tools need to be downloaded
+Before running the toolchain on your machine, some necessary tools need to be downloaded.
+
+You may have some of these tools already downloaded.
+
 #### Nodejs
 - Toolchain use nodejs to handle more complex tasks (parsing json config, calculating the size of files, adjusting SPL library)
 - Download (download the LTS version): [nodejs.org](https://nodejs.org/en/)
 #### STVP
 - Programmer to flash the program to stm
-- STVP comes with STVD that is distributed by STM. There are some license stuffs so to be sure everythings is working properly follow these guides: [www.elektromys.eu](http://www.elektromys.eu/clanky/stm8_2_stvd/clanek.html)
+- STVP comes with STVD that is distributed by STM. There are some license stuffs so to be sure everything is working properly follow these guides: [www.elektromys.eu](http://www.elektromys.eu/clanky/stm8_2_stvd/clanek.html)
 #### SDCC
 - Compiler to compile the program
 - Download: [sdcc.sourceforge.net](https://sdcc.sourceforge.net/)
