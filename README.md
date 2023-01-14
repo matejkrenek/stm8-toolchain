@@ -110,14 +110,17 @@ Now when all necessary tools are downloaded you can run the toolchain on your ma
 <!-- USAGE EXAMPLES -->
 ## Usage
 - After any adjustment of config.js run:
+
    ```sh
    make update
    ```
    or
+   
    ```sh
    make install
    ```
 - For libraries there is associated folder lib:
+-
    ```sh
    |--app
       |--inc
