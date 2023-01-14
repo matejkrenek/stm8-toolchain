@@ -50,12 +50,11 @@ In addition to this, unused functions are removed during compilation with the us
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Follow all the steps below for desired functionality of the toolchain.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+Before running the toolchain on your machine, some necessary tools need to be downloaded
 * npm
   ```sh
   npm install npm@latest -g
