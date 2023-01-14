@@ -110,9 +110,19 @@ Now when all necessary tools are downloaded you can run the toolchain on your ma
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+### Commands
+- make commands that you can use to trigger functions
+   ```sh
+   make {command}
+   ```
+  | Command         | Functionality                                                               |
+  | --------------- | --------------------------------------------------------------------------- |
+  | "install"       | It installs desired version of SPL library based on your configuration      |
+  | "update"        | Same as the install command                                                 |
+  | "clean"         | Removes build directory                                                     |
+  | "compile"       | Compiles the program                                                        |
+  | "flash"         | Uploads the program to stm                                                  |
+  | "run"           | Runs clean, compile, flash commands                                         |
 
 <!-- CONTACT -->
 ## Contact
