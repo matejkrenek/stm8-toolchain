@@ -20,10 +20,10 @@
   </p>
 </div>
 
-
+<br/>
 
 <!-- TABLE OF CONTENTS -->
-<p>Table of Contents</p>
+### Table of contents
   <li>
     <a href="#about-the-project">About The Project</a>
     <ul>
