@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd lib
+
+curl https://mamut.spseol.cz/nozka/public/spl.tgz -o spl.tgz
+
+rm -Rf SPL
+
+tar xzf spl.tgz
+
+rm spl.tgz
+rm -Rf SPL-STM8S103
+rm -Rf SPL-STM8S105
+rm -Rf SPL-STM8S208

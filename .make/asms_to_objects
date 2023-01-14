@@ -9,7 +9,7 @@ else
     sdccrm=sdccrm
     sdasstm8=sdasstm8
 fi
-
+echo $DEVICE
 "$sdccrm" $(tr '\r\n' ' ' < exclude_reference) -r $@
 
 for soubor in $@; do 

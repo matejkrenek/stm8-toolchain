@@ -1,6 +1,12 @@
-DEVICE = STM8S103
-DEVICE_FLASH = STM8S103F3
-STLINK = ST-LINK
+CONFIG_FILE = ./config.json
+
+define GetFromConfig
+	$(shell node -p "require('$(CONFIG_FILE)').$(1)")
+endef
+
+DEVICE = $(strip $(call GetFromConfig,device))
+DEVICE_FLASH = $(strip $(call GetFromConfig,flash.device))
+STLINK = $(strip $(call GetFromConfig,flash.stlink))
 F_CPU = 16000000
 SKIP_TRAPS = 1
 OUTPUT_DIR = ./build
@@ -42,7 +48,7 @@ APP_OBJECTS := $(addprefix $(OUTPUT_DIR)/, $(APP_SOURCES:.c=.rel))
 APP_INCLUDES  = $(wildcard $(APP_DIR)/inc/*.h)
 APP_ASMS := $(addprefix $(OUTPUT_DIR)/, $(APP_SOURCES:.c=.asm))
 
-LIB_SOURCES = stm8s_gpio.c stm8s_clk.c stm8s_tim4.c stm8s_itc.c 
+LIB_SOURCES = $(notdir $(wildcard $(LIB_DIR)/**/src/*.c))
 LIB_OBJECTS := $(addprefix $(OUTPUT_DIR)/, $(LIB_SOURCES:.c=.rel))
 LIB_INCLUDES  = $(wildcard $(LIB_DIR)/**/inc/*.h)
 LIB_ASMS := $(addprefix $(OUTPUT_DIR)/, $(LIB_SOURCES:.c=.asm))
@@ -52,9 +58,12 @@ VPATH = $(APP_DIR)/src $(wildcard $(LIB_DIR)/**/src)
 compile: $(TARGET).ihx
 
 $(TARGET).ihx: $(APP_ASMS) $(LIB_ASMS)
-	.make/asm2obj $^	
+	.make/asms_to_objects $^	
 	$(CC) $(C_FLAGS) $(C_DEFS) -o $(TARGET).ihx $(APP_OBJECTS) $(LIB_OBJECTS)
-	cp $@ ./out.ihx
+	@echo 
+	@echo MemSize:
+	@node .make/size_calculation --files=$(TARGET).ihx
+	@echo 
 
 $(OUTPUT_DIR)/%.asm: %.c Makefile $(APP_INCLUDES) | $(OUTPUT_DIR)
 	$(CC) $(C_FLAGS) -I app/inc $(C_DEFS) -D$(DEVICE) $(C_INCLUDES) -DSKIP_TRAPS=$(SKIP_TRAPS) -c $< -o $@
@@ -62,17 +71,22 @@ $(OUTPUT_DIR)/%.asm: %.c Makefile $(APP_INCLUDES) | $(OUTPUT_DIR)
 $(OUTPUT_DIR):
 	@mkdir -p $(OUTPUT_DIR)
 
+install:
+	bash .make/install
+	@node .make/update --library=$(LIB) --device=$(DEVICE)
+
 update:
+	bash .make/install
 	@node .make/update --library=$(LIB) --device=$(DEVICE)
 
 clean:
 	@rm -Rf $(OUTPUT_DIR)
 
 flash:
-	@echo -e "Flashed!!!"
+	"$(strip $(call GetFromConfig,flash.stvp_path))STVP_CmdLine.exe" -BoardName=$(STLINK) -Device=$(DEVICE_FLASH) -Port=USB -ProgMode=SWIM -no_loop -no_log -FileProg=$(TARGET).ihx
+	@echo FLASHED!!!!
 
 run:
-	make update
 	make clean
 	make compile
 	make flash

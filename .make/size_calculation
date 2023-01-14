@@ -1,0 +1,20 @@
+const fs = require('fs')
+
+const args = {
+    files: []
+}
+
+process.argv.slice(2)
+.filter(arg => {
+    if(arg.split('=').length == 2 && arg.split("=")[0].startsWith("--")) return true
+})
+.map(arg => {
+    return [arg.split("=")[0].slice(2), arg.split("=")[1]]
+}).forEach(arg => {
+    args[arg[0]] = arg[1].replace(' ', '').split(',')
+});
+
+args.files.forEach(file => {
+    const stats = fs.statSync(file)
+    console.log(`${file}: ${stats.size} = ${(stats.size/1024).toFixed(2)} kB`)
+})

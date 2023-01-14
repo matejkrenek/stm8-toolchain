@@ -1,4 +1,4 @@
-var fs = require('fs');
+const fs = require('fs');
 
 const args = {
     library: 'SPL',
@@ -39,6 +39,7 @@ fs.readdir(`lib/${args.library}/inc`, function(err, filenames) {
         console.error(err)
         return;
     }
+
     
     filenames.forEach(filename => {
         if(!fileIsCompatible(filename)) {
@@ -51,6 +52,8 @@ fs.readdir(`lib/${args.library}/inc`, function(err, filenames) {
         }
     })
 });
+
+console.log("Library updated!")
 
 function fileIsCompatible(filename) {
     if(args.device === 'STM8S103') {
