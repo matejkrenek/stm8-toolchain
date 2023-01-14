@@ -62,7 +62,7 @@ Before running the toolchain on your machine, some necessary tools need to be do
 - Download (download the LTS version): [nodejs.org](https://nodejs.org/en/)
 #### STVP
 - Programmer to flash the program to stm
-- STVP comes with STVD that is distributed by STM. There some license stuffs so to be sure everythings is working properly follow these guides: [www.elektromys.eu](http://www.elektromys.eu/clanky/stm8_2_stvd/clanek.html)
+- STVP comes with STVD that is distributed by STM. There are some license stuffs so to be sure everythings is working properly follow these guides: [www.elektromys.eu](http://www.elektromys.eu/clanky/stm8_2_stvd/clanek.html)
 #### SDCC
 - Compiler to compile the program
 - Download: [sdcc.sourceforge.net](https://sdcc.sourceforge.net/)
@@ -72,7 +72,7 @@ Before running the toolchain on your machine, some necessary tools need to be do
    ```
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+Now when all necessary tools are downloaded you can run the toolchain on your machine. 
 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
@@ -87,10 +87,6 @@ _Below is an example of how you can instruct your audience on installing and set
    ```js
    const API_KEY = 'ENTER YOUR API';
    ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
