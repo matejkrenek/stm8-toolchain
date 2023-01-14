@@ -9,8 +9,8 @@
 -->
 
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://cz.mouser.com/images/marketingid/2012/img/175750486.png?v=031122.0623" alt="Logo" width="80" height="80">
+  <a href="https://github.com/matejkrenek/stm8-toolchain">
+    <img src="[https://cz.mouser.com/images/marketingid/2012/img/175750486.png?v=031122.0623](https://www.mouser.ca/images/marketingid/2011/img/121374776.png?v=031122.0245)" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">STM8 Toolchain</h3>
