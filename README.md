@@ -62,7 +62,7 @@ Before running the toolchain on your machine, some necessary tools need to be do
 You may have some of these tools already downloaded.
 
 #### Nodejs
-- Toolchain use nodejs to handle more complex tasks (parsing json config, calculating the size of files, adjusting SPL library)
+- Toolchain uses nodejs to handle more complex tasks (parsing json config, calculating the size of files, adjusting SPL library)
 - Download (download the LTS version): [nodejs.org](https://nodejs.org/en/)
 #### STVP
 - Programmer to flash the program to stm
