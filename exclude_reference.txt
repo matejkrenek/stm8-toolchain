@@ -1,4 +1,6 @@
 -x _init_milis
+-x _LCD_I2C_Home
+-x _HSIDivFactor
 -x _TIM4_ClearFlag
 -x _CLK_HSIPrescalerConfig
 -x _CLK_IRQHandler
