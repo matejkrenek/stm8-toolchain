@@ -16,7 +16,7 @@
     <br />
     <a href="https://github.com/matejkrenek/stm8-toolchain/issues">Report Bug</a>
     ·
-    <a href="https://github.com/matejkreenk/stm8-toolchain/issues">Request Feature</a>
+    <a href="https://github.com/matejkrenek/stm8-toolchain/issues">Request Feature</a>
   </p>
 </div>
 
