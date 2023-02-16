@@ -1,6 +1,5 @@
 #include "stm8s.h"
 #include "delay.h"
-#include "Serial.h"
 #include "LCD_I2C.h"
 #include "encoder.h"
 
