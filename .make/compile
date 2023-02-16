@@ -1,0 +1,198 @@
+const config = require('../config.json')
+const fs = require('fs')
+const { exec } = require("child_process");
+const { promisify } = require("util")
+
+const app_dir = "./app"
+const lib_dir = "./lib"
+const output_dir = "./build"
+const compiler = process.platform === "win32" ? "C:/Program Files/SDCC/bin/sdcc" : "/opt/sdcc/bin/sdcc"
+const sdccrm = process.platform === "win32" ? ".make/sdccrm.exe" : "sdccrm"
+const sdasstm8 = process.platform === "win32" ? "C:/Program Files/SDCC/bin/sdasstm8.exe" : "sdasstm8"
+let asms_to_object_running = false
+const readdir = promisify(fs.readdir)
+
+let app_sources = [];
+let app_objects = [];
+let app_includes = [];
+let app_asms = [];
+
+let lib_sources = [];
+let lib_objects = [];
+let lib_includes = [];
+let lib_asms = [];
+
+let c_includes = ["-I app/inc"];
+let c_defs = ["-D F_CPU=16000000"];
+let c_flags = ["-mstm8", "-lstm8", "--opt-code-size", "--std-sdcc99", "--nogcse", "--all-callee-saves", "--stack-auto", "--fverbose-asm", "--float-reent", "--no-peep"];
+
+fs.readdir(`${app_dir}/src`, function(err, files) {
+    if (err) {
+        return console.log(`\x1b[31mUnable to scan directory: ${err}\x1b[0m`);
+    } 
+
+    app_sources = files
+    app_objects = app_sources.map(file => `${output_dir}/${file.replace('.c', '.rel')}`)
+    app_asms = app_sources.map(file => `${output_dir}/${file.replace('.c', '.asm')}`)
+})
+
+fs.readdir(`${app_dir}/inc`, function(err, files) {
+    if (err) {
+        return console.log(`\x1b[31mUnable to scan directory: ${err}\x1b[0m`);
+    } 
+
+    app_includes = files.map(file => `${app_dir}/inc/${file}`)
+})
+
+fs.readdir(`${lib_dir}`, function (err, folders) {
+    if (err) {
+        return console.log(`\x1b[31mUnable to scan directory: ${err}\x1b[0m`);
+    } 
+    
+    folders.forEach(folder => {
+        const stats = fs.statSync(`${lib_dir}/${folder}`)
+
+        if(stats.isDirectory()) {
+            fs.readdir(`${lib_dir}/${folder}/src`, function(err, files) {
+                if (err) {
+                    return console.log(`\x1b[31mUnable to scan directory: ${err}\x1b[0m`);
+                } 
+                
+                lib_sources = lib_sources.concat(files)
+                lib_objects = lib_sources.map(file => `${output_dir}/${file.replace('.c', '.asm')}`)
+                lib_asms = lib_sources.map(file => `${output_dir}/${file.replace('.c', '.asm')}`)
+            })
+
+            c_includes.push(`-I ${lib_dir}/${folder}/inc`)
+
+            fs.readdir(`${lib_dir}/${folder}/inc`, function(err, files) {
+                if (err) {
+                    return console.log(`\x1b[31mUnable to scan directory: ${err}\x1b[0m`);
+                } 
+            
+                lib_includes = files.map(file => `${lib_dir}/${folder}/inc/${file}`)
+            })
+        }
+    })
+    compile()
+})
+
+function cd(dir) {
+    exec(`cd ${dir}`, function(err, stdout, stderr) {
+        if (err) {
+            console.log(`\x1b[31m${err}\x1b[0m`);
+            return;
+        }
+    }) 
+}
+
+function mkdir(dir) {
+    exec(`mkdir ${dir}`, function(err, stdout, stderr) {
+        if (err) {
+            console.log(`\x1b[31m${err}\x1b[0m`);
+            return;
+        }
+    })
+}
+
+async function compile() {
+
+    exec(`cd ..`, function(err, stdout, stderr) {
+        if (err) {
+            console.log(`\x1b[31m${err}\x1b[0m`);
+            return;
+        }
+        if (stderr) {
+            console.log(`\x1b[41m${stderr}\x1b[0m`);
+            return;
+        }
+        exec(`rm -Rf build`,function() {
+            exec(`mkdir build`, function(err, stdout, stderr) {
+                if (err) {
+                    console.log(`\x1b[31m${err}\x1b[0m`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`\x1b[41m${stderr}\x1b[0m`);
+                    return;
+                }
+
+                fs.readdir(`${app_dir}/src`, function(err, files) {
+                    if (err) {
+                        return console.log(`\x1b[31mUnable to scan directory: ${err}\x1b[0m`);
+                    } 
+                    
+                    files.forEach(file => {
+                        console.log(`\x1b[90mcompiling ${app_dir}/src/${file} to ${output_dir}/${file.replace('.c', '.asm')}\x1b[0m`)
+
+                        exec(`"${compiler}" ${c_flags.join(' ')} ${c_includes.join(' ')} ${c_defs.join(' ')} -D${config.device} -DSKIP_TRAPS=${1} -c ${app_dir}/src/${file} -o ${output_dir}/${file.replace('.c', '.asm')}`, function(err, stdout, stderr) {
+                            if (err) {
+                                console.log(`\x1b[31m${err}\x1b[0m`);
+                                return;
+                            }
+                            if (stderr) {
+                                console.log(`\x1b[33m${stderr}\x1b[0m`);
+                            }
+
+                            console.log(`\x1b[32mcompiled ${app_dir}/src/${file} to ${output_dir}/${file.replace('.c', '.asm')}\x1b[0m`)
+                        })
+                    })
+        
+                })
+
+                fs.readdir(`${lib_dir}`, function (err, folders) {
+                    if (err) {
+                        return console.log(`\x1b[31mUnable to scan directory: ${err}\x1b[0m`);
+                    } 
+                    
+                    folders.forEach(folder => {
+                        const stats = fs.statSync(`${lib_dir}/${folder}`)
+
+                        if(stats.isDirectory()) {
+                            readdir(`${lib_dir}/${folder}/src`, function(err, files) {
+                                if (err) {
+                                    return console.log(`\x1b[31mUnable to scan directory: ${err}\x1b[0m`);
+                                } 
+                                
+                                files.forEach(file => {
+                                    console.log(`\x1b[90mcompiling ${lib_dir}/${folder}/src/${file} to ${output_dir}/${file.replace('.c', '.asm')}\x1b[0m`)
+
+                                    exec(`"${compiler}" ${c_flags.join(' ')} ${c_includes.join(' ')} ${c_defs.join(' ')} -D${config.device} -DSKIP_TRAPS=${1} -c ${lib_dir}/${folder}/src/${file} -o ${output_dir}/${file.replace('.c', '.asm')}`, function(err, stdout, stderr) {
+                                        if (err) {
+                                            console.log(`\x1b[31m${err}\x1b[0m`);
+                                            return;
+                                        }
+
+                                        if (stderr) {
+                                            console.log(`\x1b[33m${stderr}\x1b[0m`);
+                                        }
+                                        console.log(`\x1b[32mcompiled ${lib_dir}/${folder}/src/${file} to ${output_dir}/${file.replace('.c', '.asm')}\x1b[0m`)
+                                        
+                                        if(!asms_to_object_running) {
+                                            asms_to_object_running = true
+                                            exec(`"${sdccrm}" -r ${[...lib_asms, ...app_asms].join(" ")}`, function(err, stdout, stderr) {
+                                                if (err) {
+                                                    console.log(`\x1b[31m${err}\x1b[0m`);
+                                                    return;
+                                                }
+        
+                                                if (stderr) {
+                                                    console.log(`\x1b[33m${stderr}\x1b[0m`);
+                                                }
+
+                                                console.log(stdout)
+                                            })
+                                        }
+                                    })
+                                })
+
+                            })
+                        }
+                    })
+
+                })
+            })
+        })
+    })
+
+}

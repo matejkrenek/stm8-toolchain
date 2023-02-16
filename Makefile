@@ -60,10 +60,7 @@ compile: $(TARGET).ihx
 $(TARGET).ihx: $(APP_ASMS) $(LIB_ASMS)
 	.make/asms_to_objects $^	
 	$(CC) $(C_FLAGS) $(C_DEFS) -o $(TARGET).ihx $(APP_OBJECTS) $(LIB_OBJECTS)
-	@echo 
-	@echo MemSize:
 	@node .make/size_calculation --files=$(TARGET).ihx
-	@echo 
 
 $(OUTPUT_DIR)/%.asm: %.c Makefile $(APP_INCLUDES) | $(OUTPUT_DIR)
 	$(CC) $(C_FLAGS) -I app/inc $(C_DEFS) -D$(DEVICE) $(C_INCLUDES) -DSKIP_TRAPS=$(SKIP_TRAPS) -c $< -o $@
@@ -83,8 +80,10 @@ clean:
 	@rm -Rf $(OUTPUT_DIR)
 
 flash:
-	"$(strip $(call GetFromConfig,flash.stvp_path))STVP_CmdLine.exe" -BoardName=$(STLINK) -Device=$(DEVICE_FLASH) -Port=USB -ProgMode=SWIM -no_loop -no_log -FileProg=$(TARGET).ihx
-	@echo FLASHED!!!!
+	@node .make/flash
+
+test:
+	@echo -e $(APP_ASMS)
 
 run:
 	make clean

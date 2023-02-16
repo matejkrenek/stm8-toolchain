@@ -1,0 +1,14 @@
+const config = require('../config.json')
+const { exec } = require("child_process");
+
+exec(`"${config.flash.stvp_path}STVP_CmdLine.exe" -BoardName=${config.flash.stlink} -Device=${config.flash.device} -Port=USB -ProgMode=SWIM -no_loop -no_log -FileProg=./build/out.ihx`, (error, stdout, stderr) => {
+    if (error) {
+        console.log(`\x1b[31m${error}\x1b[0m`);
+        return;
+    }
+    if (stderr) {
+        console.log(`\x1b[41m${stderr}\x1b[0m`);
+        return;
+    }
+    console.log(`\x1b[32m${stdout}\x1b[0m`);
+});
