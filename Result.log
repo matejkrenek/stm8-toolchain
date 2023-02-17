@@ -1,0 +1,58 @@
+----------------------------------------------------------
+new log session
+date:				01/15/23
+time:				16:21:00
+----------------------------------------------------------
+STVP_CmdLine version 1.6
+
+NO ARGUMENTS GIVEN: will use default config. Type STVP_CmdLine -help for usage
+
+Configuration:
+BoardName=ST-LINK Device=STM8L15xC6 Port=USB ProgMode=SWIM
+ProgMemFileName=ProgMem.hex
+OptionFileName=Option.hex
+
+Verbose ON
+Log activity ON
+Display Progress OFF
+Message box warning if protect option byte ON
+Loop mode ON
+Erase device OFF
+Blank check device OFF
+Verify device ON
+
+
+>>> Filling PROGRAM MEMORY image in computer with Blank Value
+<<< Filling PROGRAM MEMORY image in computer succeeds
+
+>>> Loading file ProgMem.hex in PROGRAM MEMORY image in computer
+No such file or directory
+----------------------------------------------------------
+new log session
+date:				01/15/23
+time:				16:21:04
+----------------------------------------------------------
+STVP_CmdLine version 1.6
+
+NO ARGUMENTS GIVEN: will use default config. Type STVP_CmdLine -help for usage
+
+Configuration:
+BoardName=ST-LINK Device=STM8L15xC6 Port=USB ProgMode=SWIM
+ProgMemFileName=ProgMem.hex
+OptionFileName=Option.hex
+
+Verbose ON
+Log activity ON
+Display Progress OFF
+Message box warning if protect option byte ON
+Loop mode ON
+Erase device OFF
+Blank check device OFF
+Verify device ON
+
+
+>>> Filling PROGRAM MEMORY image in computer with Blank Value
+<<< Filling PROGRAM MEMORY image in computer succeeds
+
+>>> Loading file ProgMem.hex in PROGRAM MEMORY image in computer
+No such file or directory

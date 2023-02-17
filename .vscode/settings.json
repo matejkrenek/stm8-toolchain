@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    "build": true,
+    "build": false,
   },
   "files.associations": {
     "stm8s_it.h": "c",
@@ -11,6 +11,9 @@
     "serial.h": "c",
     "stdio.h": "c",
     "delay.h": "c",
-    "lcd_i2c.h": "c"
+    "lcd_i2c.h": "c",
+    "at24c.h": "c",
+    "dht11.h": "c",
+    "encoder.h": "c"
   }
 }

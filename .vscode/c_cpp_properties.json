@@ -6,7 +6,7 @@
                 "${workspaceFolder}/**",
                 "C:/Program Files/SDCC/include/**",
                 "app/inc/**",
-                "lib/SPL/inc/**"
+                "lib/**"
             ],
             "defines": [
                 "STM8S103",

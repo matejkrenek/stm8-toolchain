@@ -11,6 +11,7 @@ else
 fi
 "$sdccrm" $(tr '\r\n' ' ' < exclude_reference.txt) -r $@
 
+
 for soubor in $@; do 
     "$sdasstm8" -plosg -ff $soubor; 
 done
