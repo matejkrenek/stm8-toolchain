@@ -32,3 +32,4 @@
 -x _TIM3_CAP_COM_IRQHandler
 -x _TIM4_TimeBaseInit
 -x _TIM4_UPD_OVF_IRQHandler
+-x _LCD_I2C_Print

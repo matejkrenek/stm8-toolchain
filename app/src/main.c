@@ -56,12 +56,6 @@ void setup(void) {
     GPIO_Init(DIN_PORT, DIN_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
     GPIO_Init(CS_PORT, CS_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
     GPIO_Init(CLK_PORT, CLK_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
-    send_max(9, 0b11111111);
-    send_max(11, 7);
-    send_max(10, 3);
-    send_max(15, 0);
-    send_max(12, 1);
-    send_max(1, 3);
 }
 
 void loop(void) {
