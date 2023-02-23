@@ -66,7 +66,7 @@ You may have some of these tools already downloaded.
 - Download (download the LTS version): [nodejs.org](https://nodejs.org/en/)
 #### STVP
 - Programmer to flash the program to stm
-- STVP comes with STVD that is distributed by STM. There are some license stuffs so to be sure everything is working properly follow these guides: [www.elektromys.eu](http://www.elektromys.eu/clanky/stm8_2_stvd/clanek.html)
+- STVP comes with STVD that is distributed by STM. You can download STVD and STVP [here](https://my.st.com/content/my_st_com/en/products/development-tools/software-development-tools/stm8-software-development-tools/stm8-ides/stvd-stm8.license=1601176827357.product=STVD-STM8.version=42.0.0.html)
 #### SDCC
 - Compiler to compile the program
 - Download: [sdcc.sourceforge.net](https://sdcc.sourceforge.net/)
