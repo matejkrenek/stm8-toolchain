@@ -14,6 +14,9 @@
     "lcd_i2c.h": "c",
     "at24c.h": "c",
     "dht11.h": "c",
-    "encoder.h": "c"
-  }
+    "encoder.h": "c",
+    "milis.h": "c",
+    "lcd_i2c_ui.h": "c"
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }

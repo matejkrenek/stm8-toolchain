@@ -59,7 +59,7 @@ void Serial_Print_Int(int number)
     }
 }
 
-void Serial_Print_Newline()
+void Serial_Newline()
 {
     UART1_SendData8(0x0a);
     while (UART1_GetFlagStatus(UART1_FLAG_TXE) == RESET)

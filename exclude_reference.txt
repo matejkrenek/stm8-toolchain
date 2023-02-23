@@ -1,12 +1,11 @@
--x _init_milis
+-x _milis_init
 -x _encoder_config
+-x _LCD_I2C_NoBacklight
 -x _LCD_I2C_Home
 -x _UART1_GetFlagStatus
 -x _handleRight
 -x _handleLeft
 -x _handleClick
--x _putchar
--x _hello
 -x _HSIDivFactor
 -x _TIM4_ClearFlag
 -x _CLK_HSIPrescalerConfig
@@ -24,6 +23,7 @@
 -x _TIM1_UPD_OVF_TRG_BRK_IRQHandler
 -x _TIM2_UPD_OVF_BRK_IRQHandler
 -x _TIM3_UPD_OVF_BRK_IRQHandler
+-x _Serial_Print_String
 -x _AWU_IRQHandler
 -x _EEPROM_EEC_IRQHandler
 -x _UART1_RX_IRQHandler

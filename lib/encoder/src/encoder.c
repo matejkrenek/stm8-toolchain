@@ -4,32 +4,29 @@
 #include "Serial.h"
 
 static Encoder_Config *encoder_config;
-BitStatus PREV_STATE;
-BitStatus CURR_STATE;
-BitStatus BUTTON_STATE;
 
 INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
 {
-    CURR_STATE = GPIO_ReadInputPin(GPIOC, encoder_config->clk);
-    BUTTON_STATE = GPIO_ReadInputPin(GPIOC, encoder_config->btn);
+    encoder_config->curr_state = GPIO_ReadInputPin(GPIOC, encoder_config->clk);
+    encoder_config->btn_state = GPIO_ReadInputPin(GPIOC, encoder_config->btn);
 
-    if (CURR_STATE != PREV_STATE && !CURR_STATE)
+    if (encoder_config->curr_state != encoder_config->prev_state && !encoder_config->curr_state)
     {
-        if (GPIO_ReadInputPin(GPIOC, encoder_config->ds) != CURR_STATE)
+        if (GPIO_ReadInputPin(GPIOC, encoder_config->ds) != encoder_config->curr_state)
         {
-            Serial_Print_String("left\n");
+            encoder_config->onLeft();
         }
         else
         {
-            Serial_Print_String("right\n");
+            encoder_config->onRight();
         }
     }
-    else if (!BUTTON_STATE)
+    else if (!encoder_config->btn_state)
     {
-        Serial_Print_String("pressed\n");
+        encoder_config->onClick();
     }
 
-    PREV_STATE = CURR_STATE;
+    encoder_config->prev_state = encoder_config->curr_state;
 
     delay_ms(1);
 }
@@ -45,5 +42,5 @@ void Encoder_Init(Encoder_Config *config)
     ITC_SetSoftwarePriority(ITC_IRQ_PORTC, ITC_PRIORITYLEVEL_1);
     enableInterrupts();
 
-    PREV_STATE = GPIO_ReadInputPin(GPIOC, encoder_config->clk);
+    encoder_config->prev_state = GPIO_ReadInputPin(GPIOC, encoder_config->clk);
 }
