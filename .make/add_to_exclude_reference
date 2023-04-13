@@ -1,0 +1,14 @@
+
+const fs = require('fs');
+
+let to_exclude = []
+
+process.argv.slice(2).map(exclude => to_exclude.push(exclude))
+
+const config = fs.readFileSync('./config.json');
+
+const data = JSON.parse(config);
+
+data.compiler.exclude_reference.push(...to_exclude)
+
+fs.writeFileSync('./config.json', JSON.stringify(data));

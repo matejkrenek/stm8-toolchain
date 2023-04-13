@@ -1,0 +1,6 @@
+const config = require('../config.json')
+
+console.log(`${config.compiler.exclude_reference.map(ref => `-x ${ref}`).join(' ')}`)
+
+
+

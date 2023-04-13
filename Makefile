@@ -4,7 +4,12 @@ define GetFromConfig
 	$(shell node -p "require('$(CONFIG_FILE)').$(1)")
 endef
 
+define ArrToString
+	$(shell node -p "$(1).join(' ')")
+endef
+
 DEVICE = $(strip $(call GetFromConfig,device))
+IGNORE := $(strip $(call GetFromConfig,compiler.ignore))
 DEVICE_FLASH = $(strip $(call GetFromConfig,flash.device))
 STLINK = $(strip $(call GetFromConfig,flash.stlink))
 F_CPU = 16000000
@@ -43,14 +48,14 @@ C_FLAGS =					\
 --float-reent 				\
 --no-peep					\
 
-APP_SOURCES = $(notdir $(wildcard $(APP_DIR)/src/*.c))
+APP_SOURCES = $(notdir $(shell find $(APP_DIR)/src/*.c -type f $(foreach p, $(call ArrToString,$(IGNORE)), -not -path '$(p)')))
 APP_OBJECTS := $(addprefix $(OUTPUT_DIR)/, $(APP_SOURCES:.c=.rel))
-APP_INCLUDES  = $(wildcard $(APP_DIR)/inc/*.h)
+APP_INCLUDES  = $(shell find $(APP_DIR)/inc/*.h -type f $(foreach p, $(call ArrToString,$(IGNORE)), -not -path '$(p)'))
 APP_ASMS := $(addprefix $(OUTPUT_DIR)/, $(APP_SOURCES:.c=.asm))
 
-LIB_SOURCES = $(notdir $(wildcard $(LIB_DIR)/**/src/*.c))
+LIB_SOURCES = $(notdir $(shell find $(LIB_DIR)/**/src/*.c -type f $(foreach p, $(call ArrToString,$(IGNORE)), -not -path '$(p)')))
 LIB_OBJECTS := $(addprefix $(OUTPUT_DIR)/, $(LIB_SOURCES:.c=.rel))
-LIB_INCLUDES  = $(wildcard $(LIB_DIR)/**/inc/*.h)
+LIB_INCLUDES  = $(shell find $(LIB_DIR)/**/inc/*.h -type f $(foreach p, $(call ArrToString,$(IGNORE)), -not -path '$(p)'))
 LIB_ASMS := $(addprefix $(OUTPUT_DIR)/, $(LIB_SOURCES:.c=.asm))
 
 VPATH = $(APP_DIR)/src $(wildcard $(LIB_DIR)/**/src)
@@ -59,7 +64,8 @@ compile: $(TARGET).ihx
 
 $(TARGET).ihx: $(APP_ASMS) $(LIB_ASMS)
 	.make/asms_to_objects $^	
-	$(CC) $(C_FLAGS) $(C_DEFS) -o $(TARGET).ihx $(APP_OBJECTS) $(LIB_OBJECTS)
+	$(CC) $(C_FLAGS) $(C_DEFS) -o $(TARGET).ihx $(APP_OBJECTS) $(LIB_OBJECTS) >.make/linker_output 2>&1 || rm -f $(TARGET).ihx
+	+bash .make/reference_to_exclude .make/linker_output
 	@node .make/size_calculation --files=$(TARGET).ihx
 
 $(OUTPUT_DIR)/%.asm: %.c Makefile $(APP_INCLUDES) | $(OUTPUT_DIR)
@@ -82,10 +88,13 @@ clean:
 flash:
 	@node .make/flash
 
+
 test:
-	@echo -e $(APP_ASMS)
+	@echo $(C_INCLUDES)
+	@echo $(shell find $(LIB_DIR)/**/inc -type d $(foreach p, $(call ArrToString,$(IGNORE)), -not -path '$(p)'))
 
 run:
+	
 	make clean
 	make compile
 	make flash

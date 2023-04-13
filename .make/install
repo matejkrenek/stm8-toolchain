@@ -12,3 +12,4 @@ rm spl.tgz
 rm -Rf SPL-STM8S103
 rm -Rf SPL-STM8S105
 rm -Rf SPL-STM8S208
+rm -Rf SPL-STM8S003

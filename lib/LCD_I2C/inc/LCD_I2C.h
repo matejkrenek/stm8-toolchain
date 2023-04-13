@@ -53,6 +53,7 @@ extern uint8_t _lcd_i2c_backlight;
 extern uint8_t _lcd_i2c_displayfunction;
 extern uint8_t _lcd_i2c_displaycontrol;
 extern uint8_t _lcd_i2c_displaymode;
+extern bool _lcd_i2c_hascursor;
 
 void LCD_I2C_Init(uint8_t address, uint8_t cols, uint8_t rows);
 void LCD_I2C_ExpanderWrite(uint8_t data);
@@ -66,6 +67,10 @@ void LCD_I2C_Clear();
 void LCD_I2C_Home();
 void LCD_I2C_NoBacklight();
 void LCD_I2C_Backlight();
+bool LCD_I2C_HasCursor();
+void LCD_I2C_Cursor();
+void LCD_I2C_NoCursor();
+void LCD_I2C_ToggleCursor();
 void LCD_I2C_CreateChar(uint8_t location, uint8_t charmap[]);
 void LCD_I2C_SetCursor(uint8_t col, uint8_t row);
 void LCD_I2C_Print(uint8_t *string);

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+regular="ASlink-Warning-Undefined Global.+reference.+module\s'.+'"
+output=$1
+
+
+
+if [ -s $output ] && grep -P "$regular" $output; then
+    make clean
+    names=()
+    while read name; do
+        names+=" $name"
+    done < <(grep -P "$regular" $output\
+            | sed -r "s/^.+Global\s'(.+)' .+$/\1/" )
+
+    $(node .make/add_to_exclude_reference $names)
+
+    make run
+    
+else
+    grep --color=always -P "'[^']+'|\"[^\"]+\"|([\w\d_-]+(Warning|Error)[^:]+)|$" $output
+    exit 0
+fi

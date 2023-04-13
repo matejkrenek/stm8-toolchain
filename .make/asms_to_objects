@@ -9,8 +9,15 @@ else
     sdccrm=sdccrm
     sdasstm8=sdasstm8
 fi
-"$sdccrm" $(tr '\r\n' ' ' < exclude_reference.txt) -r $@
 
+output=$(node .make/exclude_reference $@ --sdccrm=$sdccrm)
+
+"$sdccrm" $output -r $@
+
+if [ $? -ne 0 ]; then
+  echo "$output"
+  exit 1
+fi
 
 for soubor in $@; do 
     "$sdasstm8" -plosg -ff $soubor; 

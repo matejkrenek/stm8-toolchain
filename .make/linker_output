@@ -1,0 +1,11 @@
+-mstm8 
+-lstm8 
+--opt-code-size 
+--nogcse 
+--all-callee-saves 
+--stack-auto 
+--fverbose-asm 
+--float-reent 
+--no-peep 
+-o 
+./build/out.ihx 

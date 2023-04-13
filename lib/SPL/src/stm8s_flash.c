@@ -113,15 +113,19 @@
   */
 void write_byte_address(uint32_t Address, uint8_t Data)
 {
+#if defined (_SDCC_GAS_)
+    *(PointerAttr uint8_t*) (MemoryAddressCast)Address = Data;
+#else
   /* store address & data globally for assember */
   asm_addr = Address;
   asm_val  = Data;
 
   /* use inline assembler to write to 16b/24b address */
 __asm
-  ld	a,_asm_val
-  ldf	[_asm_addr+1].e,a
+  ld a,_asm_val
+  ldf [_asm_addr+1].e,a
 __endasm;
+#endif
 
 }
 
@@ -134,6 +138,9 @@ __endasm;
   */
 uint8_t read_byte_address(uint32_t Address)
 {
+#if defined (_SDCC_GAS_)
+    return(*(PointerAttr uint8_t *) (MemoryAddressCast)Address); 
+#else
   /* store address globally for assember */
   asm_addr = Address;
 
@@ -145,6 +152,7 @@ __endasm;
 
   /* return read byte */
   return(asm_val);
+#endif
   
 }
 
@@ -271,7 +279,7 @@ void FLASH_ProgramByte(uint32_t Address, uint8_t Data)
 
   /* Program byte */
   /* SDCC patch: SDCC requires helper routines for >64kB addresses due to lack of far pointers */
-  #ifndef _SDCC_BIGMEM_
+  #if !defined (_SDCC_BIGMEM_) || defined (_SDCC_GAS_)
     *(PointerAttr uint8_t*) (MemoryAddressCast)Address = Data;
   #else
     write_byte_address((MemoryAddressCast) Address, Data);
@@ -292,7 +300,7 @@ uint8_t FLASH_ReadByte(uint32_t Address)
   
   /* Read byte */
   /* SDCC patch: SDCC requires helper routines for >64kB addresses due to lack of far pointers */
-  #ifndef _SDCC_BIGMEM_
+  #if !defined (_SDCC_BIGMEM_) || defined (_SDCC_GAS_)
     return(*(PointerAttr uint8_t *) (MemoryAddressCast)Address); 
   #else
     return(read_byte_address((MemoryAddressCast) Address));
@@ -317,7 +325,7 @@ void FLASH_ProgramWord(uint32_t Address, uint32_t Data)
   FLASH->NCR2 &= (uint8_t)(~FLASH_NCR2_NWPRG);
   
   /* SDCC patch: SDCC requires helper routines for >64kB addresses due to lack of far pointers */
-  #ifndef _SDCC_BIGMEM_
+  #if !defined (_SDCC_BIGMEM_) || defined (_SDCC_GAS_)
     /* Write one byte - from lowest address*/
     *((PointerAttr uint8_t*)(MemoryAddressCast)Address)       = *((uint8_t*)(&Data));
     /* Write one byte*/

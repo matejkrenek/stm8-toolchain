@@ -16,7 +16,16 @@
     "dht11.h": "c",
     "encoder.h": "c",
     "milis.h": "c",
-    "lcd_i2c_ui.h": "c"
+    "lcd_i2c_ui.h": "c",
+    "dsrtc.h": "c",
+    "dht.h": "c",
+    "typeinfo": "c",
+    "cstdio": "c",
+    "main.h": "c",
+    "type_traits": "c",
+    "ui.h": "c",
+    "string.h": "c",
+    "eeprom.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

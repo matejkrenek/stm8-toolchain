@@ -9,6 +9,7 @@ uint8_t _lcd_i2c_backlight;
 uint8_t _lcd_i2c_displayfunction;
 uint8_t _lcd_i2c_displaycontrol;
 uint8_t _lcd_i2c_displaymode;
+bool _lcd_i2c_hascursor = LCD_I2C_CURSOROFF;
 
 void LCD_I2C_Init(uint8_t address, uint8_t cols, uint8_t rows)
 {
@@ -18,11 +19,7 @@ void LCD_I2C_Init(uint8_t address, uint8_t cols, uint8_t rows)
     _lcd_i2c_backlight = LCD_I2C_BACKLIGHT;
     _lcd_i2c_displayfunction = LCD_I2C_4BITMODE | LCD_I2C_2LINE | LCD_I2C_5x8DOTS;
 
-    GPIO_Init(GPIOC, GPIO_PIN_5, GPIO_MODE_OUT_PP_HIGH_FAST);
-    GPIO_Init(GPIOC, GPIO_PIN_4, GPIO_MODE_OUT_PP_HIGH_FAST);
-
-    I2C_DeInit();
-    I2C_Init(100000, _lcd_i2c_address, I2C_DUTYCYCLE_2, I2C_ACK_CURR, I2C_ADDMODE_7BIT, CLK_GetClockFreq() / 1000000);
+    I2C_Init(100000, 0x00, I2C_DUTYCYCLE_2, I2C_ACK_CURR, I2C_ADDMODE_7BIT, CLK_GetClockFreq() / 1000000);
     I2C_Cmd(ENABLE);
     delay_ms(50);
     LCD_I2C_ExpanderWrite(_lcd_i2c_backlight);
@@ -163,4 +160,38 @@ void LCD_I2C_Print(uint8_t *string)
 void LCD_I2C_PrintChar(uint8_t character)
 {
     LCD_I2C_Send(character, LCD_I2C_Rs);
+}
+
+bool LCD_I2C_HasCursor()
+{
+    return _lcd_i2c_hascursor == LCD_I2C_CURSORON;
+}
+void LCD_I2C_ToggleCursor()
+{
+    if (LCD_I2C_HasCursor())
+    {
+        LCD_I2C_NoCursor();
+    }
+    else
+    {
+        LCD_I2C_Cursor();
+    }
+}
+
+void LCD_I2C_Cursor()
+{
+    _lcd_i2c_hascursor = LCD_I2C_CURSORON;
+    _lcd_i2c_displaycontrol |= _lcd_i2c_hascursor;
+
+    LCD_I2C_Command(LCD_I2C_DISPLAYCONTROL | _lcd_i2c_displaycontrol);
+    delay_ms(50);
+}
+
+void LCD_I2C_NoCursor()
+{
+    _lcd_i2c_hascursor = LCD_I2C_CURSOROFF;
+    _lcd_i2c_displaycontrol &= ~LCD_I2C_CURSORON;
+
+    LCD_I2C_Command(LCD_I2C_DISPLAYCONTROL | _lcd_i2c_displaycontrol);
+    delay_ms(50);
 }
