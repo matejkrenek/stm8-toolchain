@@ -25,7 +25,11 @@
     "type_traits": "c",
     "ui.h": "c",
     "string.h": "c",
-    "eeprom.h": "c"
+    "eeprom.h": "c",
+    "stm8s_wwdg.h": "c",
+    "tone.h": "c",
+    "stm8s_iwdg.h": "c",
+    "rgb.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

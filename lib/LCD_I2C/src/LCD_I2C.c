@@ -23,7 +23,6 @@ void LCD_I2C_Init(uint8_t address, uint8_t cols, uint8_t rows)
     I2C_Cmd(ENABLE);
     delay_ms(50);
     LCD_I2C_ExpanderWrite(_lcd_i2c_backlight);
-    delay_ms(1000);
     LCD_I2C_Write4Bits(0x03 << 4);
     delay_us(4500);
     LCD_I2C_Write4Bits(0x03 << 4);

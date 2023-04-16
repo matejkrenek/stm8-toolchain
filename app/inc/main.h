@@ -2,7 +2,6 @@
 #define __MAIN_H
 
 #include "stm8s.h"
-#include "stdio.h"
 
 #define len(arr) sizeof(arr) / sizeof(arr[0])
 #define LED_PORT GPIOD

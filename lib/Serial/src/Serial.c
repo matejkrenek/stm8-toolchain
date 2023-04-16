@@ -115,7 +115,7 @@ int putchar(int c)
 {
     UART2_SendData8(c);
 
-    while (UART2_GetFlagStatus(UART2_FLAG_TC) == RESET)
+    while (UART2_GetFlagStatus(UART2_FLAG_TXE) == RESET)
         ;
 
     return c;

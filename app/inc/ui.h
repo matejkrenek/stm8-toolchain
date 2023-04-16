@@ -1,23 +1,33 @@
 #ifndef __UI_H
 #define __UI_H
 
+#include "stm8s.h"
 #include "LCD_I2C_UI.h"
 #include "LCD_I2C.h"
+#include "peripherals.h"
+#include "eeprom.h"
+#include "rgb.h"
+#include "tone.h"
+#include "dsrtc.h"
+#include "string.h"
+#include "milis.h"
+#include "delay.h"
+#include "stdio.h"
 
-LCD_I2C_UI_Page_Content LCD_UI_Page_Home[] = {
+static LCD_I2C_UI_Page_Content LCD_UI_Page_Home[] = {
     {
-        .text = "Time: ",
+        .text = "",
         .onRender = UI_HomePage,
         .onClick = LCD_I2C_UI_RedirectDynamically,
         .redirectName = "menu",
     },
 };
 
-LCD_I2C_UI_Page_Content LCD_UI_Page_Menu[] = {
+static LCD_I2C_UI_Page_Content LCD_UI_Page_Menu[] = {
     {
-        .text = "Periferals",
+        .text = "Peripherals",
         .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "periferals",
+        .redirectName = "peripherals",
     },
     {
         .text = "Settings",
@@ -30,32 +40,27 @@ LCD_I2C_UI_Page_Content LCD_UI_Page_Menu[] = {
         .redirectName = "main_page",
     },
     {
-        .text = "Actions",
-        .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "actions",
-    },
-    {
         .text = "Back",
         .onClick = LCD_I2C_UI_RedirectDynamically,
         .redirectName = "home",
     },
 };
 
-LCD_I2C_UI_Page_Content LCD_UI_Page_Periferals[] = {
+static LCD_I2C_UI_Page_Content LCD_UI_Page_Peripherals[] = {
     {
         .text = "Real Time Clock",
         .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "periferal_rtc",
+        .redirectName = "peripheral_rtc",
     },
     {
         .text = "RGB LED",
         .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "periferal_rgb",
+        .redirectName = "peripheral_rgb",
     },
     {
         .text = "LEDs (8b)",
         .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "periferal_leds",
+        .redirectName = "peripheral_leds",
     },
     {
         .text = "Back",
@@ -64,81 +69,100 @@ LCD_I2C_UI_Page_Content LCD_UI_Page_Periferals[] = {
     },
 };
 
-LCD_I2C_UI_Page_Content LCD_UI_Page_Periferal_Leds[] = {
+static LCD_I2C_UI_Page_Content LCD_UI_Page_Peripheral_Leds[] = {
     {
         .text = "Val.: ",
-        .onRender = UI_Periferal_LEDs,
-        .onClick = UI_Periferal_LEDs_Action,
-        .onLeft = UI_Periferal_LEDs_ActionLeft,
-        .onRight = UI_Periferal_LEDs_ActionRight,
+        .onRender = UI_Peripheral_LEDs,
+        .onClick = UI_Peripheral_LEDs_Action,
+        .onLeft = UI_Peripheral_LEDs_ActionLeft,
+        .onRight = UI_Peripheral_LEDs_ActionRight,
     },
     {
         .text = "Time: ",
-        .onRender = UI_Periferal_LEDs_Period,
-        .onClick = UI_Periferal_LEDs_Period_Action,
-        .onLeft = UI_Periferal_LEDs_Period_ActionLeft,
-        .onRight = UI_Periferal_LEDs_Period_ActionRight,
+        .onRender = UI_Peripheral_LEDs_Period,
+        .onClick = UI_Peripheral_LEDs_Period_Action,
+        .onLeft = UI_Peripheral_LEDs_Period_ActionLeft,
+        .onRight = UI_Peripheral_LEDs_Period_ActionRight,
     },
     {
         .text = "Mode: ",
-        .onRender = UI_Periferal_LEDs_Mode,
-        .onClick = UI_Periferal_LEDs_Mode_Action,
-        .onLeft = UI_Periferal_LEDs_Mode_ActionLeft,
-        .onRight = UI_Periferal_LEDs_Mode_ActionRight,
+        .onRender = UI_Peripheral_LEDs_Mode,
+        .onClick = UI_Peripheral_LEDs_Mode_Action,
+        .onLeft = UI_Peripheral_LEDs_Mode_ActionLeft,
+        .onRight = UI_Peripheral_LEDs_Mode_ActionRight,
     },
     {
         .text = "Back",
         .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "periferals",
+        .redirectName = "peripherals",
     },
 };
 
-LCD_I2C_UI_Page_Content LCD_UI_Page_Periferal_RTC[] = {
+static LCD_I2C_UI_Page_Content LCD_UI_Page_Peripheral_RTC[] = {
     {
         .text = "Time: ",
-        .onRender = UI_Periferal_RTC_Time,
-        .onClick = UI_Periferal_RTC_Time_Action,
-        .onLeft = UI_Periferal_RTC_Time_ActionLeft,
-        .onRight = UI_Periferal_RTC_Time_ActionRight,
+        .onRender = UI_Peripheral_RTC_Time,
+        .onClick = UI_Peripheral_RTC_Time_Action,
+        .onLeft = UI_Peripheral_RTC_Time_ActionLeft,
+        .onRight = UI_Peripheral_RTC_Time_ActionRight,
     },
     {
         .text = "Date: ",
-        .onRender = UI_Periferal_RTC_Date,
-        .onClick = UI_Periferal_RTC_Date_Action,
-        .onLeft = UI_Periferal_RTC_Date_ActionLeft,
-        .onRight = UI_Periferal_RTC_Date_ActionRight,
+        .onRender = UI_Peripheral_RTC_Date,
+        .onClick = UI_Peripheral_RTC_Date_Action,
+        .onLeft = UI_Peripheral_RTC_Date_ActionLeft,
+        .onRight = UI_Peripheral_RTC_Date_ActionRight,
     },
     {
         .text = "Back",
         .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "periferals",
+        .redirectName = "peripherals",
     },
 };
 
-LCD_I2C_UI_Page_Content LCD_UI_Page_Periferal_RGB[] = {
+static LCD_I2C_UI_Page_Content LCD_UI_Page_Peripheral_RGB[] = {
     {
-        .text = "R: 255",
+        .text = "R: ",
+        .onRender = UI_Peripheral_RGB_Red,
+        .onClick = UI_Peripheral_RGB_Red_Action,
+        .onLeft = UI_Peripheral_RGB_Red_ActionLeft,
+        .onRight = UI_Peripheral_RGB_Red_ActionRight,
     },
     {
-        .text = "G: 55",
+        .text = "G: ",
+        .onRender = UI_Peripheral_RGB_Green,
+        .onClick = UI_Peripheral_RGB_Green_Action,
+        .onLeft = UI_Peripheral_RGB_Green_ActionLeft,
+        .onRight = UI_Peripheral_RGB_Green_ActionRight,
     },
     {
-        .text = "B: 80",
+        .text = "B: ",
+        .onRender = UI_Peripheral_RGB_Blue,
+        .onClick = UI_Peripheral_RGB_Blue_Action,
+        .onLeft = UI_Peripheral_RGB_Blue_ActionLeft,
+        .onRight = UI_Peripheral_RGB_Blue_ActionRight,
+    },
+    {
+        .text = "Alpha: ",
+        .onRender = UI_Peripheral_RGB_Alpha,
+        .onClick = UI_Peripheral_RGB_Alpha_Action,
+        .onLeft = UI_Peripheral_RGB_Alpha_ActionLeft,
+        .onRight = UI_Peripheral_RGB_Alpha_ActionRight,
     },
     {
         .text = "Back",
         .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "periferals",
+        .redirectName = "peripherals",
     },
 };
 
-LCD_I2C_UI_Page_Content LCD_UI_Page_Settings[] = {
+static LCD_I2C_UI_Page_Content LCD_UI_Page_Settings[] = {
     {
         .text = "Light off: ",
-        .onRender = UI_Periferal_Settings_Light,
-        .onClick = UI_Periferal_Settings_Light_Action,
-        .onLeft = UI_Periferal_Settings_Light_ActionLeft,
-        .onRight = UI_Periferal_Settings_Light_ActionRight,
+        .onRender = UI_Peripheral_Settings_Light,
+        .onClick = UI_Peripheral_Settings_Light_Action,
+        .onLeft = UI_Peripheral_Settings_Light_ActionLeft,
+        .onRight = UI_Peripheral_Settings_Light_ActionRight,
     },
     {
         .text = "Cursor: ",
@@ -146,37 +170,18 @@ LCD_I2C_UI_Page_Content LCD_UI_Page_Settings[] = {
         .onClick = UI_Action_SettingsCursor,
     },
     {
-        .text = "Back",
-        .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "menu",
-    },
-};
-
-LCD_I2C_UI_Page_Content LCD_UI_Page_MainPage[] = {
-    {
-        .text = "Time",
+        .text = "Volume: ",
+        .onRender = UI_Settings_Sound_Volume,
+        .onClick = UI_Settings_Sound_Volume_Action,
+        .onLeft = UI_Settings_Sound_Volume_ActionLeft,
+        .onRight = UI_Settings_Sound_Volume_ActionRight,
     },
     {
-        .text = "Back",
-        .onClick = LCD_I2C_UI_RedirectDynamically,
-        .redirectName = "menu",
-    },
-};
-
-LCD_I2C_UI_Page_Content LCD_UI_Page_Actions[] = {
-    {
-        .text = "Send Temp Chart",
-        .onClick = UI_Actions_TempChart,
-    },
-    {
-        .text = "Send Temp Table",
-        .onClick = UI_Actions_TempTable,
-
-    },
-    {
-        .text = "Send Temp Classic",
-        .onClick = UI_Actions_TempClassic,
-
+        .text = "Freq.: ",
+        .onRender = UI_Settings_Sound_Freq,
+        .onClick = UI_Settings_Sound_Freq_Action,
+        .onLeft = UI_Settings_Sound_Freq_ActionLeft,
+        .onRight = UI_Settings_Sound_Freq_ActionRight,
     },
     {
         .text = "Back",
@@ -185,7 +190,22 @@ LCD_I2C_UI_Page_Content LCD_UI_Page_Actions[] = {
     },
 };
 
-LCD_I2C_UI_Page LCD_UI_Pages[] = {
+static LCD_I2C_UI_Page_Content LCD_UI_Page_MainPage[] = {
+    {
+        .text = "Periph.: ",
+        .onRender = UI_MainPage_Peripheral,
+        .onClick = UI_MainPage_Peripheral_Action,
+        .onLeft = UI_MainPage_Peripheral_ActionLeft,
+        .onRight = UI_MainPage_Peripheral_ActionRight,
+    },
+    {
+        .text = "Back",
+        .onClick = LCD_I2C_UI_RedirectDynamically,
+        .redirectName = "menu",
+    },
+};
+
+static LCD_I2C_UI_Page LCD_UI_Pages[] = {
     {
         .name = "home",
         .content_length = len(LCD_UI_Page_Home),
@@ -199,39 +219,33 @@ LCD_I2C_UI_Page LCD_UI_Pages[] = {
         .hasScrollbar = TRUE,
     },
     {
-        .name = "periferals",
-        .content_length = len(LCD_UI_Page_Periferals),
-        .content = LCD_UI_Page_Periferals,
+        .name = "peripherals",
+        .content_length = len(LCD_UI_Page_Peripherals),
+        .content = LCD_UI_Page_Peripherals,
         .hasScrollbar = TRUE,
     },
     {
-        .name = "periferal_leds",
-        .content_length = len(LCD_UI_Page_Periferal_Leds),
-        .content = LCD_UI_Page_Periferal_Leds,
+        .name = "peripheral_leds",
+        .content_length = len(LCD_UI_Page_Peripheral_Leds),
+        .content = LCD_UI_Page_Peripheral_Leds,
         .hasScrollbar = TRUE,
     },
     {
-        .name = "periferal_rgb",
-        .content_length = len(LCD_UI_Page_Periferal_RGB),
-        .content = LCD_UI_Page_Periferal_RGB,
+        .name = "peripheral_rgb",
+        .content_length = len(LCD_UI_Page_Peripheral_RGB),
+        .content = LCD_UI_Page_Peripheral_RGB,
         .hasScrollbar = TRUE,
     },
     {
-        .name = "periferal_rtc",
-        .content_length = len(LCD_UI_Page_Periferal_RTC),
-        .content = LCD_UI_Page_Periferal_RTC,
+        .name = "peripheral_rtc",
+        .content_length = len(LCD_UI_Page_Peripheral_RTC),
+        .content = LCD_UI_Page_Peripheral_RTC,
         .hasScrollbar = TRUE,
     },
     {
         .name = "settings",
         .content_length = len(LCD_UI_Page_Settings),
         .content = LCD_UI_Page_Settings,
-        .hasScrollbar = TRUE,
-    },
-    {
-        .name = "actions",
-        .content_length = len(LCD_UI_Page_Actions),
-        .content = LCD_UI_Page_Actions,
         .hasScrollbar = TRUE,
     },
     {
@@ -242,9 +256,65 @@ LCD_I2C_UI_Page LCD_UI_Pages[] = {
     },
 };
 
-LCD_I2C_UI_Config LCD_UI_CONFIG = {
+static LCD_I2C_UI_Config LCD_UI_CONFIG = {
     .page_length = len(LCD_UI_Pages),
     .pages = LCD_UI_Pages,
 };
+
+void UI_HomePage();
+void UI_Peripheral_LEDs();
+void UI_Peripheral_LEDs_Mode();
+void UI_Peripheral_LEDs_Mode_Action();
+void UI_Peripheral_LEDs_Mode_ActionLeft();
+void UI_Peripheral_LEDs_Mode_ActionRight();
+void UI_Peripheral_LEDs_Period();
+void UI_Peripheral_LEDs_Period_Action();
+void UI_Peripheral_LEDs_Period_ActionLeft();
+void UI_Peripheral_LEDs_Period_ActionRight();
+void UI_Peripheral_LEDs_Action();
+void UI_Peripheral_LEDs_ActionLeft();
+void UI_Peripheral_LEDs_ActionRight();
+void UI_SettingsCursor();
+void UI_Action_SettingsCursor();
+void UI_Peripheral_RTC_Time();
+void UI_Peripheral_RTC_Time_Action();
+void UI_Peripheral_RTC_Time_ActionLeft();
+void UI_Peripheral_RTC_Time_ActionRight();
+void UI_Peripheral_RTC_Date();
+void UI_Peripheral_RTC_Date_Action();
+void UI_Peripheral_RTC_Date_ActionLeft();
+void UI_Peripheral_RTC_Date_ActionRight();
+void UI_Peripheral_Settings_Light();
+void UI_Peripheral_Settings_Light_Action();
+void UI_Peripheral_Settings_Light_ActionLeft();
+void UI_Peripheral_Settings_Light_ActionRight();
+void UI_Settings_Sound_Volume();
+void UI_Settings_Sound_Volume_Action();
+void UI_Settings_Sound_Volume_ActionLeft();
+void UI_Settings_Sound_Volume_ActionRight();
+void UI_Settings_Sound_Freq();
+void UI_Settings_Sound_Freq_Action();
+void UI_Settings_Sound_Freq_ActionLeft();
+void UI_Settings_Sound_Freq_ActionRight();
+void UI_Peripheral_RGB_Red();
+void UI_Peripheral_RGB_Red_Action();
+void UI_Peripheral_RGB_Red_ActionLeft();
+void UI_Peripheral_RGB_Red_ActionRight();
+void UI_Peripheral_RGB_Green();
+void UI_Peripheral_RGB_Green_Action();
+void UI_Peripheral_RGB_Green_ActionLeft();
+void UI_Peripheral_RGB_Green_ActionRight();
+void UI_Peripheral_RGB_Blue();
+void UI_Peripheral_RGB_Blue_Action();
+void UI_Peripheral_RGB_Blue_ActionLeft();
+void UI_Peripheral_RGB_Blue_ActionRight();
+void UI_Peripheral_RGB_Alpha();
+void UI_Peripheral_RGB_Alpha_Action();
+void UI_Peripheral_RGB_Alpha_ActionLeft();
+void UI_Peripheral_RGB_Alpha_ActionRight();
+void UI_MainPage_Peripheral();
+void UI_MainPage_Peripheral_Action();
+void UI_MainPage_Peripheral_ActionLeft();
+void UI_MainPage_Peripheral_ActionRight();
 
 #endif /* __UI_H */

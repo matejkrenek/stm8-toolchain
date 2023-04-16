@@ -31,7 +31,6 @@ INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 
 void DHT_Init(GPIO_Pin_TypeDef pin)
 {
-    // _dht_pin = pin;
     GPIO_Init(GPIOD, GPIO_PIN_2, GPIO_MODE_OUT_OD_HIZ_SLOW);
     EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOD, EXTI_SENSITIVITY_RISE_FALL);
     ITC_SetSoftwarePriority(ITC_IRQ_PORTD, ITC_PRIORITYLEVEL_1);
@@ -71,7 +70,6 @@ void DHT_Read()
             }
             break;
         case READING:
-            Serial_Print_String("READING");
 
             if (milis() - _dht_last_time > 6)
             {
